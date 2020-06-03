@@ -1,0 +1,150 @@
+.weather {
+  flex: 1 1;
+}
+
+.weatherToday {
+  font-weight: bold;
+}
+
+.weatherToday > .wrapper {
+  padding: var(--space-m);
+  flex: 1 1;
+  justify-content: flex-start;
+}
+
+.city {
+  font-size: var(--font-size-xxl);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.time {
+  font-size: var(--font-size-xl);
+  text-transform: capitalize;
+}
+
+.today {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  grid-template-areas:
+    'temp icon'
+    'temp info';
+  grid-template-columns: 2fr 1fr;
+  text-transform: uppercase;
+}
+
+.temp {
+  font-size: 9em;
+  grid-area: temp;
+}
+
+.iconToday {
+  width: 215px;
+  height: 155px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  grid-area: icon;
+}
+
+.info {
+  grid-area: info;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 120px;
+  padding: var(--space-s);
+}
+
+.weatherDays .dayIcon {
+  width: 75px;
+  height: 75px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.weatherDays {
+  display: flex;
+  justify-content: space-around;
+}
+
+.day {
+  padding: var(--space-xs);
+  font-weight: bold;
+
+  display: flex;
+  flex-wrap: wrap;
+  width: 33%;
+}
+
+.dayWeek {
+  text-transform: capitalize;
+  font-size: var(--font-size-m);
+  width: 100%;
+  align-self: center;
+  text-align: center;
+}
+
+.dayTemp {
+  font-size: var(--font-size-xl);
+  width: 60%;
+  align-self: center;
+  text-align: center;
+}
+
+.dayIcon {
+  width: 40%;
+}
+
+@media only screen and (max-width: 720px) {
+  .weatherDays {
+    flex-direction: column;
+  }
+  .dayWeek {
+    width: 30%;
+    text-align: left;
+  }
+  .day {
+    flex-wrap: nowrap;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .today {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'temp icon'
+      'info info';
+  }
+
+  .temp {
+    font-size: 5em;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .today {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'temp '
+      'icon'
+      'info';
+  }
+  .day {
+    flex-wrap: wrap;
+  }
+  .dayWeek {
+    width: 100%;
+    text-align: center;
+  }
+
+  .temp {
+    font-size: var(--font-size-xxxl);
+  }
+}

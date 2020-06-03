@@ -1,0 +1,33 @@
+:root {
+  --main-font: Arial, Helvetica, sans-serif;
+  --secondary-font: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+
+  --text-base-size: 20px;
+  --text-scale-ratio: 1.2;
+
+  --font-size-xs: calc(
+    1em / (var(--text-scale-ratio) * var(--text-scale-ratio))
+  );
+  --font-size-s: calc(var(--text-base-size) / var(--text-scale-ratio));
+  --font-size-m: calc(1em * var(--text-scale-ratio));
+  --font-size-l: calc(1em * var(--text-scale-ratio) * var(--text-scale-ratio));
+  --font-size-xl: calc(
+    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio)
+  );
+  --font-size-xxl: calc(
+    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio)
+  );
+  --font-size-xxxl: calc(
+    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio)
+  );
+
+  --line-height-m: 1.25;
+  --line-height-l: 1.5;
+  --line-height-xl: 1.75;
+  --line-height-xxl: 2;
+}

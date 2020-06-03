@@ -1,0 +1,222 @@
+:root {
+  --heightControlsBtns: 40px;
+  --borderRadius: 4px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  user-select: none;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  margin: 5px;
+  padding: var(--space-s);
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.controls > .buttons {
+  flex: 1 1;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.controls > .search {
+  width: 40%;
+}
+
+.btnBackgound {
+  background-image: url('../../images/controls--btn.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-color: var(--gray);
+  width: var(--heightControlsBtns);
+  height: var(--heightControlsBtns);
+  border-radius: var(--borderRadius);
+  transition: ease all 0.4s;
+
+  position: relative;
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: rgba(0, 0, 0, 0.76);
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  border-radius: var(--borderRadius);
+  padding: var(--space-xs) var(--space-s);
+  position: absolute;
+  z-index: 1;
+  top: 130%;
+  margin-left: -60px;
+}
+.tooltip::after {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
+}
+.btnBackgound:hover {
+  background-color: #178000;
+}
+.btnBackgound:hover .tooltip {
+  visibility: visible;
+}
+
+.btnBackgoundImg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  background-image: url('../../images/icon_refresh.svg');
+
+  width: 15px;
+  height: 15px;
+}
+
+.btnBackgoundImgActive {
+  animation: rotateRefresh 0.5s linear infinite;
+}
+
+.selectLanguage {
+  background-color: var(--gray);
+  border: 0;
+  height: var(--heightControlsBtns);
+  padding: var(--space-xxs) var(--space-s);
+  margin: 0 var(--space-m);
+  border-radius: var(--borderRadius);
+  cursor: pointer;
+}
+
+.option {
+  background-color: white;
+  font-weight: bold;
+  font-size: var(--font-size-m);
+}
+
+input[type='radio'] {
+  display: none;
+}
+
+.btnsTemp {
+  height: var(--heightControlsBtns);
+  display: flex;
+}
+
+.label {
+  padding: var(--space-xs) var(--space-s);
+  background-color: var(--gray);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: ease all 0.4s;
+}
+
+.label.celsius {
+  border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+}
+
+.label.fahrenheit {
+  border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+}
+
+input[type='radio']:checked + label {
+  font-weight: bold;
+  background-color: #74cef0;
+  border-bottom: 2px solid #00b7ff;
+}
+
+.label:hover,
+input[type='radio']:checked + label:hover {
+  background-color: #00b7ff;
+}
+
+.inputsearch {
+  font-family: var(--main-font);
+  font-size: var(--font-size-m);
+  width: 100%;
+  outline: 0;
+  padding: 0 var(--space-m);
+  background: rgba(76, 82, 85, 0.4);
+  color: #fff;
+  height: var(--heightControlsBtns);
+  border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+}
+.inputsearch::placeholder {
+  color: #cfcfcfc7;
+}
+
+.btnSearch {
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  width: 120px;
+  font-size: var(--font-size-s);
+  font-weight: bold;
+  height: var(--heightControlsBtns);
+  border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+  transition: ease all 0.4s;
+}
+
+.btnSearchLoad {
+  background: linear-gradient(
+    45deg,
+    #00b7ff 25%,
+    #fff 0,
+    #fff 50%,
+    #00b7ff 0,
+    #00b7ff 75%,
+    #fff 0,
+    #fff
+  );
+  background-size: 10px 10px;
+  animation: stripes 1s linear infinite;
+}
+
+@keyframes stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 50px 0;
+  }
+}
+
+.btnSearch:hover {
+  background-color: #00b7ff;
+  border: 1px solid #00b7ff;
+}
+
+@keyframes rotateRefresh {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .controls > .search {
+    width: 100%;
+  }
+
+  .selectLanguage {
+    margin: 0 var(--space-xs);
+  }
+}
