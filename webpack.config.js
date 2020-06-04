@@ -6,16 +6,19 @@ module.exports = {
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+    publicPath: '/fancy-weather/',
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
   },
-  plugins: [new HtmlWebpackPlugin({
-    favicon: './images/favicon.svg',
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      favicon: './images/favicon.png',
+      template: './index.html',
+    }),
+  ],
   module: {
     rules: [
       {
@@ -37,9 +40,7 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: [
-              '@babel/plugin-proposal-class-properties',
-            ],
+            plugins: ['@babel/plugin-proposal-class-properties'],
           },
         },
       },

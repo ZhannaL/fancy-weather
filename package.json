@@ -25,7 +25,8 @@
   "scripts": {
     "test": "jest",
     "build": "webpack",
-    "start": "webpack-dev-server --open"
+    "start": "webpack-dev-server --open",
+    "deploy": "./build-gh-pages.sh"
   },
   "dependencies": {
     "mapbox-gl": "^1.10.1"
