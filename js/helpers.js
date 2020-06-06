@@ -177,5 +177,5 @@ export const getDataToPicUrl = (timeZone, weatherCode) => {
       season = 'summer';
   }
 
-  return `${getShortWeatherByCode(weatherCode)},${dayTime},${season}`;
+  return `${season},${dayTime},${getShortWeatherByCode(weatherCode)}`;
 };

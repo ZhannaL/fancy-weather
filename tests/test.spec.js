@@ -36,10 +36,10 @@ describe('helpers tests', () => {
   it('check Error', () => {
     expect(() => getPlaceholder('fr')).toThrow(Error);
     expect(() => getPlaceholder('fr')).toThrowError(
-      new Error('Sorry, we dont know this language.')
+      new Error('Sorry, we dont know this language.'),
     );
     expect(() => getTextButtonSearch('fr')).toThrowError(
-      new Error('Sorry, we dont know this language.')
+      new Error('Sorry, we dont know this language.'),
     );
   });
 });

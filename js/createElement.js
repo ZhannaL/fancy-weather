@@ -168,12 +168,6 @@ const syncTrees = (oldTree, newTree) => {
     if (oldTree.nodeName === '#text' && newTree.nodeName === '#text') {
       return newTree;
     }
-    if (oldTree.nodeName === 'TEXTAREA') {
-      const { selectionStart, selectionEnd } = oldTree;
-      oldTree.value = newTree.value;
-      oldTree.selectionStart = selectionStart;
-      oldTree.selectionEnd = selectionEnd;
-    }
 
     [...newTree.childNodes].forEach((child, index) => {
       const newChild = syncTrees(oldTree.childNodes[index], child);

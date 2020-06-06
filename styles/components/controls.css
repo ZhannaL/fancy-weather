@@ -45,7 +45,8 @@
   position: relative;
 }
 
-.tooltip {
+.tooltip,
+.tooltipVoicebtn {
   visibility: hidden;
   width: 120px;
   background-color: rgba(0, 0, 0, 0.76);
@@ -59,6 +60,8 @@
   top: 130%;
   margin-left: -60px;
 }
+
+.tooltipVoicebtn::after,
 .tooltip::after {
   content: '';
   position: absolute;
@@ -83,8 +86,8 @@
   border: none;
   background-image: url('../../images/icon_refresh.svg');
 
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
 }
 
 .btnBackgoundImgActive {
@@ -117,7 +120,8 @@ input[type='radio'] {
 }
 
 .label {
-  padding: var(--space-xs) var(--space-s);
+  height: var(--heightControlsBtns);
+  padding: 0 var(--space-s);
   background-color: var(--gray);
   display: flex;
   justify-content: center;
@@ -134,15 +138,40 @@ input[type='radio'] {
   border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
 }
 
-input[type='radio']:checked + label {
+input[type='radio']:checked + .label {
   font-weight: bold;
   background-color: #74cef0;
-  border-bottom: 2px solid #00b7ff;
+  border-bottom: 1px solid #00b7ff;
 }
 
 .label:hover,
-input[type='radio']:checked + label:hover {
+input[type='radio']:checked + .label:hover {
   background-color: #00b7ff;
+}
+
+.btnVoice {
+  background-color: var(--gray);
+  width: var(--heightControlsBtns);
+  height: var(--heightControlsBtns);
+  border-radius: var(--borderRadius);
+  transition: ease all 0.4s;
+  position: relative;
+  margin-left: var(--space-m);
+}
+
+.btnVoice:hover .tooltipVoicebtn {
+  visibility: visible;
+}
+
+.btnVoiceImg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border: none;
+  background-image: url('../../images/icon_microphone.svg');
+
+  width: 20px;
+  height: 20px;
 }
 
 .inputsearch {
