@@ -1,0 +1,72 @@
+.inputsearch {
+  font-family: var(--main-font);
+  font-size: var(--font-size-m);
+  width: 100%;
+  outline: 0;
+  padding: 0 var(--space-m);
+  background: var(--inputBackground);
+  color: var(--whiteText);
+  height: var(--heightControlsBtns);
+  border-radius: var(--borderRadius) 0 0 var(--borderRadius);
+}
+
+.inputsearch::placeholder {
+  color: var(--inputPlaceholder);
+}
+
+.btnSearch {
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  width: 120px;
+  font-size: var(--font-size-s);
+  font-weight: bold;
+  height: var(--heightControlsBtns);
+  border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
+  transition: ease all 0.4s;
+}
+
+.btnSearchLoad {
+  background: linear-gradient(
+    45deg,
+    var(--mainColor) 25%,
+    #fff 0,
+    #fff 50%,
+    var(--mainColor) 0,
+    var(--mainColor) 75%,
+    #fff 0,
+    #fff
+  );
+  background-size: 10px 10px;
+  animation: stripes 1s linear infinite;
+}
+
+@keyframes stripes {
+  0% {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 50px 0;
+  }
+}
+
+.btnSearch:hover {
+  background-color: var(--mainColor);
+  border: 1px solid var(--mainColor);
+}
+
+@keyframes rotateRefresh {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .controls > .search {
+    width: 100%;
+  }
+}

@@ -53,6 +53,8 @@ export default class FancyWeather extends Component {
 
     btnBackgoundImgClass: '',
     btnSearchClass: '',
+    btnVoiceClass: '',
+
     voice: '',
   };
 
@@ -156,13 +158,14 @@ export default class FancyWeather extends Component {
   startRecognition = () => {
     const msgToSpeak = `The weather in ${this.state.city} is ${getWetherDescrByCode(this.state.weatherToday.weatherCode)('en')}. 
     Temperature is ${getTepmByType(this.state.weatherToday.temp, this.state.tempType)} degrees ${this.state.tempType}`;
-
+    this.setState({ btnVoiceClass: 'btnVoiceActive' });
     this.recognition.start();
     this.recognition.onresult = (event) => {
       const result = event.results[0][0].transcript;
       if ((result === 'weather' || result === 'forecast') && !event.results[1]) {
         getVoicedmsg(msgToSpeak, this.state.voice).addEventListener('end', () => {
           this.recognition.stop();
+          this.setState({ btnVoiceClass: '' });
         });
       }
       const volume = event.results[1] ? event.results[1][0].transcript : null;
@@ -173,6 +176,9 @@ export default class FancyWeather extends Component {
         getVoicedmsg(msgToSpeak, this.state.voice, 0.4);
       }
     };
+    this.recognition.addEventListener('end', () => {
+      this.setState({ btnVoiceClass: '' });
+    });
   };
 
   searchPlace = (value) => {
@@ -280,6 +286,7 @@ export default class FancyWeather extends Component {
       weatherDays,
       btnBackgoundImgClass,
       btnSearchClass,
+      btnVoiceClass,
     } = this.state;
     const {
       temp, appTemp, wind, humidity, weatherCode,
@@ -297,204 +304,206 @@ export default class FancyWeather extends Component {
     // console.log('img', imagebg);
 
     return div({
-      className: 'appWrapper',
+      className: 'appBackground',
       style: imagebg ? `background-image: url(${imagebg})` : '',
-    })([
-      div({ className: 'controls' })([
-        div({ className: 'wrapper buttons' })([
-          button({
-            className: 'btnBackgound',
-            onClick: () => this.changeBackground(),
-          })([
-            img({
-              className: `btnBackgoundImg ${btnBackgoundImgClass}`,
-              alt: 'refresh',
-              src:
-                'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-            })(),
-            div({ className: 'tooltip' })('change \r\n background image'),
-          ]),
-          select({
-            className: 'selectLanguage',
-            ref: this.selectLanguage,
-            value: language,
-            onChange: () => this.changeLanguage(this.selectLanguage.current.value),
-          })([
-            option({ className: 'option', value: 'ru' })('RU'),
-            option({ className: 'option', value: 'pl' })('PL'),
-            option({ className: 'option', value: 'en' })('EN'),
-          ]),
-          form({ className: 'btnsTemp' })([
-
-            label()([
-              input({
-                className: 'input celsius',
-                name: 'temp',
-                type: 'radio',
-                value: 'celsius',
-                checked: tempType === 'celsius',
-                ref: this.inputCelsius,
-                onChange: () => this.changeTempType(this.inputCelsius.current.value),
-              })(),
-              span({ className: 'label celsius' })('°C'),
-            ]),
-
-            label()([
-              input({
-                className: 'input fahrenheit',
-                name: 'temp',
-                type: 'radio',
-                value: 'fahrenheit',
-                checked: tempType === 'fahrenheit',
-                ref: this.inputFahrenheit,
-                onChange: () => this.changeTempType(this.inputFahrenheit.current.value),
-              })(),
-              span({ className: 'label fahrenheit' })('°F'),
-            ]),
-          ]),
-
-          button({
-            className: 'btnVoice',
-            onClick: () => this.startRecognition(),
-          })([
-            img({
-              className: `btnVoiceImg ${''}`,
-              alt: 'voice',
-              src:
-                'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-            })(),
-            div({ className: 'tooltipVoicebtn' })('speak: \r\n "weather"'),
-          ]),
-        ]),
-        div({ className: 'wrapper search' })([
-          input({
-            ref: this.input,
-            className: 'inputsearch',
-            type: 'text',
-            value: search,
-            placeholder: getPlaceholder(language),
-            onChange: () => this.setState({ search: this.input.current.value }),
-          })(),
-          button({
-            className: `btnSearch ${btnSearchClass}`,
-            onClick: () => this.searchPlace(search),
-          })(getTextButtonSearch(language)),
-        ]),
-      ]),
-      div({ className: 'weatherAndMap' })([
-        div({ className: 'weather' })([
-          div({ className: 'weatherToday' })([
-            div({ className: 'wrapper city' })([
-              div()(`${city} , ${country} `),
-              div()(` ${state}`),
-            ]),
-            div({ className: 'wrapper time' })([
-              new TimeZone({ timeZone, language }),
-            ]),
-            div({ className: 'wrapper today' })([
-              div({ className: 'temp' })(
-                `${getTepmByType(temp, tempType)}${
-                  tempType === 'celsius' ? '°C' : '°F'
-                }`,
-              ),
+    })(
+      div({ className: 'appWrapper' })([
+        div({ className: 'controls' })([
+          div({ className: 'wrapper buttons' })([
+            button({
+              className: 'btnBackgound',
+              onClick: () => this.changeBackground(),
+            })([
               img({
-                className: `iconToday ${getIconClassNameWeatherByCode(
-                  weatherCode,
-                )}`,
-                alt: 'weather icon today',
+                className: `btnBackgoundImg ${btnBackgoundImgClass}`,
+                alt: 'refresh',
                 src:
-                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+                'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
               })(),
-              div({ className: 'info' })([
-                div({ className: 'infoLine' })(
-                  getWetherDescrByCode(weatherCode)(language),
+              div({ className: 'tooltip' })('change \r\n background image'),
+            ]),
+            select({
+              className: 'selectLanguage',
+              ref: this.selectLanguage,
+              value: language,
+              onChange: () => this.changeLanguage(this.selectLanguage.current.value),
+            })([
+              option({ className: 'option', value: 'ru' })('RU'),
+              option({ className: 'option', value: 'pl' })('PL'),
+              option({ className: 'option', value: 'en' })('EN'),
+            ]),
+            form({ className: 'btnsTemp' })([
+
+              label()([
+                input({
+                  className: 'input celsius',
+                  name: 'temp',
+                  type: 'radio',
+                  value: 'celsius',
+                  checked: tempType === 'celsius',
+                  ref: this.inputCelsius,
+                  onChange: () => this.changeTempType(this.inputCelsius.current.value),
+                })(),
+                span({ className: 'label celsius' })('°C'),
+              ]),
+
+              label()([
+                input({
+                  className: 'input fahrenheit',
+                  name: 'temp',
+                  type: 'radio',
+                  value: 'fahrenheit',
+                  checked: tempType === 'fahrenheit',
+                  ref: this.inputFahrenheit,
+                  onChange: () => this.changeTempType(this.inputFahrenheit.current.value),
+                })(),
+                span({ className: 'label fahrenheit' })('°F'),
+              ]),
+            ]),
+
+            button({
+              className: `btnVoice ${btnVoiceClass}`,
+              onClick: () => this.startRecognition(),
+            })([
+              img({
+                className: 'btnVoiceImg',
+                alt: 'voice',
+                src:
+                'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+              })(),
+              div({ className: 'tooltipVoicebtn' })('speak: \r\n "weather"'),
+            ]),
+          ]),
+          div({ className: 'wrapper search' })([
+            input({
+              ref: this.input,
+              className: 'inputsearch',
+              type: 'text',
+              value: search,
+              placeholder: getPlaceholder(language),
+              onChange: () => this.setState({ search: this.input.current.value }),
+            })(),
+            button({
+              className: `btnSearch ${btnSearchClass}`,
+              onClick: () => this.searchPlace(search),
+            })(getTextButtonSearch(language)),
+          ]),
+        ]),
+        div({ className: 'weatherAndMap' })([
+          div({ className: 'weather' })([
+            div({ className: 'weatherToday' })([
+              div({ className: 'wrapper city' })([
+                div()(`${city} , ${country} `),
+                div()(` ${state}`),
+              ]),
+              div({ className: 'wrapper time' })([
+                new TimeZone({ timeZone, language }),
+              ]),
+              div({ className: 'wrapper today' })([
+                div({ className: 'temp' })(
+                  `${getTepmByType(temp, tempType)}${
+                    tempType === 'celsius' ? '°C' : '°F'
+                  }`,
                 ),
-                div({ className: 'infoLine' })(
-                  `${getWeatherInfo('feels')(language)}: ${getTepmByType(
-                    appTemp,
-                    tempType,
-                  )} ${tempType === 'celsius' ? '°C' : '°F'}`,
+                img({
+                  className: `iconToday ${getIconClassNameWeatherByCode(
+                    weatherCode,
+                  )}`,
+                  alt: 'weather icon today',
+                  src:
+                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+                })(),
+                div({ className: 'info' })([
+                  div({ className: 'infoLine' })(
+                    getWetherDescrByCode(weatherCode)(language),
+                  ),
+                  div({ className: 'infoLine' })(
+                    `${getWeatherInfo('feels')(language)}: ${getTepmByType(
+                      appTemp,
+                      tempType,
+                    )} ${tempType === 'celsius' ? '°C' : '°F'}`,
+                  ),
+                  div({ className: 'infoLine' })(
+                    `${getWeatherInfo('wind')(language)}: ${Math.ceil(
+                      wind,
+                    )} ${getWindSPD(language)}`,
+                  ),
+                  div({ className: 'infoLine' })(
+                    `${getWeatherInfo('rh')(language)}: ${Math.ceil(humidity)} %`,
+                  ),
+                ]),
+              ]),
+            ]),
+            div({ className: 'weatherDays wrapper' })([
+              div({ className: 'day' })([
+                div({ className: 'dayWeek' })(
+                  get3DaysWeekName(language, timeZone)[0],
                 ),
-                div({ className: 'infoLine' })(
-                  `${getWeatherInfo('wind')(language)}: ${Math.ceil(
-                    wind,
-                  )} ${getWindSPD(language)}`,
+                div({ className: 'dayTemp' })(
+                  `${getTepmByType(day1, tempType)}${
+                    tempType === 'celsius' ? '°C' : '°F'
+                  }`,
                 ),
-                div({ className: 'infoLine' })(
-                  `${getWeatherInfo('rh')(language)}: ${Math.ceil(humidity)} %`,
+                img({
+                  className: `dayIcon ${getIconClassNameWeatherByCode(
+                    day1WeatherCode,
+                  )}`,
+                  alt: 'weather icon day',
+                  src:
+                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+                })(),
+              ]),
+              div({ className: 'day' })([
+                div({ className: 'dayWeek' })(
+                  get3DaysWeekName(language, timeZone)[1],
                 ),
+                div({ className: 'dayTemp' })(
+                  `${getTepmByType(day2, tempType)}${
+                    tempType === 'celsius' ? '°C' : '°F'
+                  }`,
+                ),
+                img({
+                  className: `dayIcon ${getIconClassNameWeatherByCode(
+                    day2WeatherCode,
+                  )}`,
+                  alt: 'weather icon day',
+                  src:
+                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+                })(),
+              ]),
+              div({ className: 'day' })([
+                div({ className: 'dayWeek' })(
+                  get3DaysWeekName(language, timeZone)[2],
+                ),
+                div({ className: 'dayTemp' })(
+                  `${getTepmByType(day3, tempType)}${
+                    tempType === 'celsius' ? '°C' : '°F'
+                  }`,
+                ),
+                img({
+                  className: `dayIcon ${getIconClassNameWeatherByCode(
+                    day3WeatherCode,
+                  )}`,
+                  alt: 'weather icon day',
+                  src:
+                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
+                })(),
               ]),
             ]),
           ]),
-          div({ className: 'weatherDays wrapper' })([
-            div({ className: 'day' })([
-              div({ className: 'dayWeek' })(
-                get3DaysWeekName(language, timeZone)[0],
-              ),
-              div({ className: 'dayTemp' })(
-                `${getTepmByType(day1, tempType)}${
-                  tempType === 'celsius' ? '°C' : '°F'
-                }`,
-              ),
-              img({
-                className: `dayIcon ${getIconClassNameWeatherByCode(
-                  day1WeatherCode,
-                )}`,
-                alt: 'weather icon day',
-                src:
-                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-              })(),
+          div({ className: 'mapBlock wrapper' })([
+            div({ className: 'map mapboxgl-map', id: 'myMap' })(),
+            div({ className: 'latitude' })([
+              div()(`${getTextlatitudelongitude('lat')(language)}:`),
+              div()(`${lat}`),
             ]),
-            div({ className: 'day' })([
-              div({ className: 'dayWeek' })(
-                get3DaysWeekName(language, timeZone)[1],
-              ),
-              div({ className: 'dayTemp' })(
-                `${getTepmByType(day2, tempType)}${
-                  tempType === 'celsius' ? '°C' : '°F'
-                }`,
-              ),
-              img({
-                className: `dayIcon ${getIconClassNameWeatherByCode(
-                  day2WeatherCode,
-                )}`,
-                alt: 'weather icon day',
-                src:
-                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-              })(),
+            div({ className: 'longitude' })([
+              div()(`${getTextlatitudelongitude('lng')(language)}:`),
+              div()(`${lng}`),
             ]),
-            div({ className: 'day' })([
-              div({ className: 'dayWeek' })(
-                get3DaysWeekName(language, timeZone)[2],
-              ),
-              div({ className: 'dayTemp' })(
-                `${getTepmByType(day3, tempType)}${
-                  tempType === 'celsius' ? '°C' : '°F'
-                }`,
-              ),
-              img({
-                className: `dayIcon ${getIconClassNameWeatherByCode(
-                  day3WeatherCode,
-                )}`,
-                alt: 'weather icon day',
-                src:
-                  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7',
-              })(),
-            ]),
-          ]),
-        ]),
-        div({ className: 'mapBlock wrapper' })([
-          div({ className: 'map mapboxgl-map', id: 'myMap' })(),
-          div({ className: 'latitude' })([
-            div()(`${getTextlatitudelongitude('lat')(language)}:`),
-            div()(`${lat}`),
-          ]),
-          div({ className: 'longitude' })([
-            div()(`${getTextlatitudelongitude('lng')(language)}:`),
-            div()(`${lng}`),
           ]),
         ]),
       ]),
-    ]);
+    );
   }
 }

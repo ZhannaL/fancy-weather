@@ -3,3 +3,8 @@
 body {
   font-family: var(--main-font);
 }
+
+html,
+body {
+  height: 100%;
+}

@@ -1,5 +1,6 @@
 @import './app.css';
-@import './controls.css';
+@import './btnControls.css';
+@import './searchContors.css';
 @import './weather.css';
 @import './map.css';
 @import './icons.css';

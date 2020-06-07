@@ -17,7 +17,7 @@
   margin: 5px;
   padding: var(--space-s);
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--backgroundColorWrapper);
 }
 
 .controls > .buttons {
@@ -49,8 +49,8 @@
 .tooltipVoicebtn {
   visibility: hidden;
   width: 120px;
-  background-color: rgba(0, 0, 0, 0.76);
-  color: #fff;
+  background-color: var(--backgroundColorTooltip);
+  color: var(--whiteText);
   text-align: center;
   font-weight: bold;
   border-radius: var(--borderRadius);
@@ -70,10 +70,10 @@
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: transparent transparent black transparent;
+  border-color: transparent transparent var(--borderColor) transparent;
 }
 .btnBackgound:hover {
-  background-color: #178000;
+  background-color: var(--btnImage);
 }
 .btnBackgound:hover .tooltip {
   visibility: visible;
@@ -105,7 +105,6 @@
 }
 
 .option {
-  background-color: white;
   font-weight: bold;
   font-size: var(--font-size-m);
 }
@@ -120,6 +119,7 @@ input[type='radio'] {
 }
 
 .label {
+  color: var(--textColor);
   height: var(--heightControlsBtns);
   padding: 0 var(--space-s);
   background-color: var(--gray);
@@ -140,13 +140,13 @@ input[type='radio'] {
 
 input[type='radio']:checked + .label {
   font-weight: bold;
-  background-color: #74cef0;
-  border-bottom: 1px solid #00b7ff;
+  background-color: var(--mainColorActive);
+  border-bottom: 1px solid var(--mainColor);
 }
 
 .label:hover,
 input[type='radio']:checked + .label:hover {
-  background-color: #00b7ff;
+  background-color: var(--mainColor);
 }
 
 .btnVoice {
@@ -157,6 +157,15 @@ input[type='radio']:checked + .label:hover {
   transition: ease all 0.4s;
   position: relative;
   margin-left: var(--space-m);
+}
+
+.btnVoiceActive {
+  background-color: var(--mainColor);
+}
+
+.btnVoice:active {
+  background-color: var(--mainColor);
+  transform: translateY(2px);
 }
 
 .btnVoice:hover .tooltipVoicebtn {
@@ -174,77 +183,7 @@ input[type='radio']:checked + .label:hover {
   height: 20px;
 }
 
-.inputsearch {
-  font-family: var(--main-font);
-  font-size: var(--font-size-m);
-  width: 100%;
-  outline: 0;
-  padding: 0 var(--space-m);
-  background: rgba(76, 82, 85, 0.4);
-  color: #fff;
-  height: var(--heightControlsBtns);
-  border-radius: var(--borderRadius) 0 0 var(--borderRadius);
-}
-.inputsearch::placeholder {
-  color: #cfcfcfc7;
-}
-
-.btnSearch {
-  text-transform: uppercase;
-  border: 1px solid #fff;
-  width: 120px;
-  font-size: var(--font-size-s);
-  font-weight: bold;
-  height: var(--heightControlsBtns);
-  border-radius: 0 var(--borderRadius) var(--borderRadius) 0;
-  transition: ease all 0.4s;
-}
-
-.btnSearchLoad {
-  background: linear-gradient(
-    45deg,
-    #00b7ff 25%,
-    #fff 0,
-    #fff 50%,
-    #00b7ff 0,
-    #00b7ff 75%,
-    #fff 0,
-    #fff
-  );
-  background-size: 10px 10px;
-  animation: stripes 1s linear infinite;
-}
-
-@keyframes stripes {
-  0% {
-    background-position: 0 0;
-  }
-
-  to {
-    background-position: 50px 0;
-  }
-}
-
-.btnSearch:hover {
-  background-color: #00b7ff;
-  border: 1px solid #00b7ff;
-}
-
-@keyframes rotateRefresh {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(359deg);
-  }
-}
-
 @media only screen and (max-width: 720px) {
-  .controls > .search {
-    width: 100%;
-  }
-
   .selectLanguage {
     margin: 0 var(--space-xs);
   }

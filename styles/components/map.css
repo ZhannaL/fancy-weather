@@ -25,7 +25,6 @@
 .longitude {
   text-align: right;
   margin-top: var(--space-s);
-  color: #fff;
   font-size: var(--font-size-l);
   font-family: var(--main-font);
   font-weight: bold;

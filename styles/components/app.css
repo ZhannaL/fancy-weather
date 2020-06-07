@@ -1,22 +1,24 @@
-.appWrapper {
-  padding: var(--space-l);
-
+.appBackground {
   position: relative;
   background-image: url('../../images/pic1.jpg');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  height: 100%;
+}
+
+.appWrapper {
+  padding: var(--space-l);
 
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  color: var(--whiteText);
 }
 
 .weatherAndMap {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-
   flex: 1;
-  color: #fff;
 }
