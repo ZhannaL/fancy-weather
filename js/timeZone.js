@@ -9,14 +9,12 @@ export default class TimeZone extends Component {
     currentTime: new Date(),
   }
 
-  // startTime=() => {
-  //   this.setState({ currentTime: new Date() });
-  //   setTimeout(this.startTime, 1000);
-  // }
-
   componentDidMount() {
-    // this.startTime();
-    setInterval(() => this.setState({ currentTime: new Date() }), 1000);
+    this.interval = setInterval(() => this.setState({ currentTime: new Date() }), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {

@@ -4,6 +4,8 @@ const ON_RENDER = Symbol('on render internal callback');
 const DO_RENDER = Symbol('do render internal method');
 const LIFECYCLE_STATE = Symbol('lifecycle state inner prop');
 
+const allComponents = new WeakMap();
+
 export class Component {
   [LIFECYCLE_STATE] = 'new';
 
@@ -27,6 +29,8 @@ export class Component {
   }
 
   componentDidMount() { return this; }
+
+  componentWillUnmount() { return this; }
 
   render() { return this; }
 }
@@ -54,6 +58,7 @@ export const createElement = (tagName) => (children) => {
           } else {
             element.replaceChild(newElement, oldElement);
           }
+          allComponents.set(newElement, el);
           oldElement = newElement;
         };
         el = el[DO_RENDER]();
@@ -132,6 +137,15 @@ export const tag = (tagName) => (props = {}) => (children) => {
           element.setAttribute(key, value);
         }
         break;
+      case 'checked':
+        if (tagName === 'input') {
+          if (value) {
+            element.checked = true;
+          }
+        } else {
+          element.setAttribute(key, value);
+        }
+        break;
       case 'ref':
         value.current = element;
         elementRefs.set(element, value);
@@ -148,6 +162,10 @@ const propsToCopy = ['className', 'placeholder', 'value'];
 
 const syncTrees = (oldTree, newTree) => {
   if (oldTree?.nodeName === newTree?.nodeName) {
+    const oldComponent = allComponents.get(oldTree);
+    if (oldComponent) {
+      oldComponent.componentWillUnmount();
+    }
     const oldTreeEventListeners = allEventListeners.get(oldTree) ?? [];
     const newTreeEventListeners = allEventListeners.get(newTree) ?? [];
 

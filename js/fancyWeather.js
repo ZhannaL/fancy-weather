@@ -66,14 +66,6 @@ export default class FancyWeather extends Component {
 
   input = createRef();
 
-  constructor(props) {
-    super(props);
-    this.setState({
-      language: localStorage.getItem('language') || 'en',
-      tempType: localStorage.getItem('tempType') || 'celsius',
-    });
-  }
-
   componentDidMount() {
     mapboxgl.accessToken = 'pk.eyJ1Ijoiemhhbm5hc2JpdG5ldmEiLCJhIjoiY2thc2h6eXRxMGtlcTJ3bzV3N2I4cW5leCJ9.gVomj5-byfWfjNDI8M33fQ';
     this.mapboxgl = new mapboxgl.Map({
@@ -117,7 +109,6 @@ export default class FancyWeather extends Component {
           zoom: 10,
           essential: true,
         });
-        // console.log(data.results[0].components.country_code);
         return {
           city: data.results[0].components.city,
           countryCode: data.results[0].components.country_code,
@@ -142,9 +133,6 @@ export default class FancyWeather extends Component {
           },
         }));
       });
-
-    // console.log('mount');
-
     getLinkToImage('weather').then((pic) => this.setState({ imagebg: pic }));
   }
 
@@ -299,9 +287,6 @@ export default class FancyWeather extends Component {
       day3,
       day3WeatherCode,
     } = weatherDays;
-    // console.log(tempType);
-    // console.log(tempType === 'fahrenheit');
-    // console.log('img', imagebg);
 
     return div({
       className: 'appBackground',

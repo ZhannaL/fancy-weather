@@ -31,7 +31,6 @@ export const getLocation = (language, city) => {
 
 export const getWeather = (city, country) => {
   const url = `https://api.weatherbit.io/v2.0/forecast/daily?city=${city}&country=${country}&days=4&key=e6c68e83b219470ab0a7c464e2aa0b78`;
-  // console.log(url);
   return fetch(url)
     .then((res) => res.json())
     .then((res) => res);
@@ -62,7 +61,6 @@ export const getVoicedmsg = (text, voice, volume) => {
   msg.pitch = 1;
   msg.text = text;
   msg.voice = voice;
-  // console.log(msg);
   speechSynthesis.speak(msg);
   return msg;
 };
