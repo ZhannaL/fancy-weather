@@ -3,6 +3,7 @@ import {
   getTextButtonSearch,
   getTepmByType,
   getShortWeatherByCode,
+  getMsgToSpeak,
 } from '../js/helpers';
 
 describe('helpers tests', () => {
@@ -35,11 +36,22 @@ describe('helpers tests', () => {
 
   it('check Error', () => {
     expect(() => getPlaceholder('fr')).toThrow(Error);
+    expect(() => getTextButtonSearch('fr')).toThrow(Error);
+  });
+
+  it('check Error message', () => {
     expect(() => getPlaceholder('fr')).toThrowError(
       new Error('Sorry, we dont know this language.'),
     );
     expect(() => getTextButtonSearch('fr')).toThrowError(
       new Error('Sorry, we dont know this language.'),
     );
+  });
+
+  it('check message about weather', () => {
+    expect(getMsgToSpeak('Krakow', 803, 25, 'celsius')).toBe(`The weather in Krakow is Broken clouds. 
+    Temperature is 25 degrees celsius`);
+    expect(getMsgToSpeak('London', 502, 19, 'fahrenheit')).toBe(`The weather in London is Heavy Rain. 
+    Temperature is 67 degrees fahrenheit`);
   });
 });

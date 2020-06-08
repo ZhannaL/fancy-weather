@@ -179,3 +179,11 @@ export const getDataToPicUrl = (timeZone, weatherCode) => {
 
   return `${season},${dayTime},${getShortWeatherByCode(weatherCode)}`;
 };
+
+
+export const getMsgToSpeak = (city, weatherCode, temp, tempType) => {
+  const msgToSpeak = `The weather in ${city} is ${getWetherDescrByCode(weatherCode)('en')}. 
+    Temperature is ${getTepmByType(temp, tempType)} degrees ${tempType}`;
+
+  return msgToSpeak;
+};

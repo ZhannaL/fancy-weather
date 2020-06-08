@@ -16,6 +16,7 @@ import {
   getWetherDescrByCode,
   getIconClassNameWeatherByCode,
   getDataToPicUrl,
+  getMsgToSpeak,
 } from './helpers';
 import {
   getLinkToImage, getLocation, getWeather, getRecognition, getVoicedmsg,
@@ -144,8 +145,10 @@ export default class FancyWeather extends Component {
   };
 
   startRecognition = () => {
-    const msgToSpeak = `The weather in ${this.state.city} is ${getWetherDescrByCode(this.state.weatherToday.weatherCode)('en')}. 
-    Temperature is ${getTepmByType(this.state.weatherToday.temp, this.state.tempType)} degrees ${this.state.tempType}`;
+    const msgToSpeak = getMsgToSpeak(
+      this.state.city, this.state.weatherToday.weatherCode,
+      this.state.weatherToday.temp, this.state.tempType,
+    );
     this.setState({ btnVoiceClass: 'btnVoiceActive' });
     this.recognition.start();
     this.recognition.onresult = (event) => {
